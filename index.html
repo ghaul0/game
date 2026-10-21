@@ -92,6 +92,35 @@ body {
 		</style>
 		<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
 <link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
+<style>
+body { background-color: #f5d6a8; }
+#status-progress { position: static; display: block; width: min(70%, 320px); height: 14px; margin: 18px auto 0; -webkit-appearance: none; appearance: none; border: 2px solid #8a4b2a; border-radius: 8px; background: #fff3dc; overflow: hidden; }
+#status-progress::-webkit-progress-bar { background: #fff3dc; }
+#status-progress::-webkit-progress-value { background: #e0a43a; }
+#status-progress::-moz-progress-bar { background: #e0a43a; }
+#status-splash { position: static; max-height: 40%; margin: 0 auto; }
+#load-text { color: #5a3420; font-family: Georgia, 'Times New Roman', serif; text-align: center; margin: 12px 24px 0; font-size: 16px; line-height: 1.4; }
+#load-text small { display: block; font-size: 13px; opacity: 0.75; margin-top: 6px; }
+</style>
+<script>
+window.addEventListener('DOMContentLoaded', function () {
+	var st = document.getElementById('status');
+	var bar = document.getElementById('status-progress');
+	if (!st || !bar) return;
+	var txt = document.createElement('div');
+	txt.id = 'load-text';
+	st.appendChild(txt);
+	var tips = ['Lighting the lanterns', 'Waking the townsfolk', 'Stoking the forge', 'Sweeping the roads', 'Feeding the cat'];
+	var t0 = Date.now();
+	var id = setInterval(function () {
+		if (!document.body.contains(st)) { clearInterval(id); return; }
+		var pct = (bar.max > 0 && bar.value > 0) ? Math.floor(100 * bar.value / bar.max) : -1;
+		var tip = tips[Math.floor((Date.now() - t0) / 2500) % tips.length];
+		var head = pct >= 100 ? 'Almost there...' : (pct >= 0 ? tip + '... ' + pct + '%' : tip + '...');
+		txt.innerHTML = head + '<small>The first visit downloads the game (about 25 MB). After that it opens much faster.</small>';
+	}, 250);
+});
+</script>
 
 	</head>
 	<body>
@@ -111,7 +140,7 @@ body {
 
 		<script src="index.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":true,"fileSizes":{"index.pck":41568748,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":true,"fileSizes":{"index.pck":14655648,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 
